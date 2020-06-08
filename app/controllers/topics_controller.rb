@@ -1,6 +1,4 @@
 class TopicsController < ApplicationController
-	def top
-	end
 
 	def index
 		@topics = Topic.all
@@ -10,7 +8,7 @@ class TopicsController < ApplicationController
 	def create
 	  	@topic = Topic.new(topic_params)
 	  	@topic.save
-	  	redirect_to index_path
+	  	redirect_to root_path
 	end
 
 	def show
@@ -22,7 +20,7 @@ class TopicsController < ApplicationController
 	def delete
 	  	@topic = Topic.find(params[:id])
 	  	@topic.destroy
-	  	redirect_to index_path
+	  	redirect_to root_path
 	end
 
     private
