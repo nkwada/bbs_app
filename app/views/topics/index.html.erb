@@ -1,4 +1,13 @@
  <h1>2chクローン</h1>
+
+ <%= search_form_for @q do |f| %>
+  <%= f.label :title, "スレッド・レス横断検索" %>
+  <%= f.search_field :title_or_posts_body_cont %>
+
+  <%= f.submit "検索" %>
+<% end %>
+<hr>
+
  <%= link_to "スレッド新規作成", new_topic_path %>
  <hr>
  <% @topics.each do |topic| %>

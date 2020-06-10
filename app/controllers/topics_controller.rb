@@ -1,7 +1,8 @@
 class TopicsController < ApplicationController
 
 	def index
-		@topics = Topic.all
+		@q = Topic.joins(:posts).ransack(params[:q])
+  		@topics = @q.result(distinct: true)
 	end
 
 	def show
