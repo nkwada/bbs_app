@@ -1,15 +1,39 @@
- <h1>2chクローン</h1>
+<% if user_signed_in? %> <!-- ユーザーがログインしているか調べる -->
+  <!-- ユーザーがログインしていた時の処理 -->
+  <p class="mt-3"><span class="mt-3 mr-3 text-info">ログインしています</span>メールアドレス： <%= current_user.email %> </p>
+   <!-- ログアウトをする -->
+<% else %>
 
- <%= search_form_for @q do |f| %>
-  <%= f.label :title, "スレッド・レス横断検索" %>
-  <%= f.search_field :title_or_posts_body_cont %>
+  <p class="mt-3">ログインすればスレッドを作成できます</p>
 
-  <%= f.submit "検索" %>
 <% end %>
+
 <hr>
 
- <%= link_to "スレッド新規作成", new_topic_path %>
- <hr>
- <% @topics.each do |topic| %>
-  <%= link_to topic.title, topic_path(topic) %> </br>
- <% end %>
+<%= search_form_for @q do |f| %>
+<%= f.label :title, "スレッド・レス横断検索" %>
+<%= f.search_field :title_or_posts_body_cont %>
+
+<%= f.submit "検索" %>
+<% end %>
+
+<hr>
+
+<% @topics.each do |topic| %>
+	<div class="card shadow mb-3">
+		<div class="card-body">
+			<%= link_to topic.title, topic_path(topic), class: "h3" %>
+			<% topic.categories.each do |category| %>
+			<span class="badge badge-dark"><%= category.name %></span>
+			<% end %>
+			<p>1：<%= topic.posts.first.name %><%= topic.posts.first.created_at.strftime("%Y/%m/%d %H:%M:%S ") %></p>
+			<p><%= topic.posts.first.body %></p>
+		</div>
+	</div>
+
+<% end %>
+
+
+
+
+

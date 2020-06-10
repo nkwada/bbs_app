@@ -1,20 +1,26 @@
- <%= link_to "スレッド一覧に戻る", topics_path %>
- <hr>
- <h1><%= @topic.title %></h1>
- <% @topic.categories.each do |category| %>
-  <%= category.name %>
+<%= link_to "スレッド一覧に戻る", topics_path %>
+
+<hr>
+
+<h1><%= @topic.title %></h1>
+
+<% @topic.categories.each do |category| %>
+	<span class="badge badge-dark"><%= category.name %></span>
 <% end %>
- <%= link_to "タイトルを編集する", edit_topic_path(@topic) %>
- <%= link_to "削除する", topic_path(@topic), method: :delete, data: { confirm: "本当に削除しますか？" } %>
- <hr>
+
+<% if user_signed_in? && current_user.id == @topic.user_id%>
+	<%= link_to "タイトルを編集する", edit_topic_path(@topic) %>
+	<%= link_to "削除する", topic_path(@topic), method: :delete, data: { confirm: "本当に削除しますか？" } %>
+<% end %>
+
+<hr>
 
 
 <% @topic.posts.each_with_index do |post, index| %>
 	<%= index + 1 %>：
 	<%= post.name %>
-	<%= post.created_at.strftime("%Y/%m/%d %H:%M:%S ") %>：
-    <%= link_to "削除する", topic_post_path(@topic, post), method: :delete, data: { confirm: "本当に削除しますか?" } %> <br>
-	<%= post.body %> <br>
+	<%= post.created_at.strftime("%Y/%m/%d %H:%M:%S ") %><br>
+	<%= post.body %><br>
 <% end %>
 
 <hr>
@@ -22,5 +28,5 @@
 <%= form_for @post, url: topic_posts_path(@topic, @post) do |f| %>
 	名前: <%= f.text_field :name %> <br>
 	コメント: <%= f.text_area :body %> <br>
-	<%= f.submit %>
+	<%= f.submit "投稿する" %>
 <% end %>

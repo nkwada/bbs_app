@@ -11,12 +11,6 @@ class PostsController < ApplicationController
 		end
 	end
 
-	def destroy
-		@topic = Topic.find(params[:topic_id])
-		@post = Post.find(params[:id])
-		@post.destroy
-		redirect_to topic_url(@topic)
-	end
 
 	private
 

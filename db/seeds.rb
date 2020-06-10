@@ -5,3 +5,5 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+%W[カテゴリ１ カテゴリ２ カテゴリ３ カテゴリ４].each { |sample| Category.create(name: sample) }
