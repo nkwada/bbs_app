@@ -3,7 +3,7 @@ class TopicsController < ApplicationController
 
 	def index
 		@q = Topic.includes([:topic_categories], [:categories]).ransack(params[:q])
-  		@topics = @q.result(distinct: true).reverse_order
+  		@topics = @q.result(distinct: true).reverse_order.page(params[:page]).per(5)
 	end
 
 	def show
