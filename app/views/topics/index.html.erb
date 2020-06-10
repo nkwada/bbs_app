@@ -1,28 +1,6 @@
-<% if user_signed_in? %>
-
-  <h4> メールアドレス： <%= current_user.email %> </h4>
-  <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-<% else %>
-
-  <h2> 現在ログインしていません </h2>
-  <%= link_to "ログイン", new_user_session_path, class: 'post' %>
-  <%= link_to "新規登録", new_user_registration_path, class: 'post' %>
-<% end %>
-
-
-<h1>スレッド一覧</h1>
-<ul>
-  <% @topics.each do |topic| %>
-    <li>
-    	<%= link_to topic.title, topics_show_path(topic.id) %>
-    	<%= link_to '[削除]', topic_delete_path(topic.id), method: :delete, data: {confirm: "削除してもよろしいですか？"} %>
-    </li>
-  <% end %>
-</ul>
-
-
-<h1>スレッド新規投稿</h1>
-<%= form_for @newTopic, :url => {:action => 'create'} do |f| %>
-  <%= f.text_field :title %>
-  <%= f.submit %>
-<% end %>
+ <h1>2chクローン</h1>
+ <%= link_to "スレッド新規作成", new_topic_path %>
+ <hr>
+ <% @topics.each do |topic| %>
+  <%= link_to topic.title, topic_path(topic) %> </br>
+ <% end %>

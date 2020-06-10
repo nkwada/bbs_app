@@ -1,13 +1,26 @@
 class PostsController < ApplicationController
- 	def create
- 		@post = Post.new(post_params)
- 		@post.save
- 		redirect_to topics_show_path(params[:post]['topic_id'])
- 	end
+	def create
+		@topic = Topic.find(params[:topic_id])
+		@post = Post.new(params_post)
+		@post.topic = @topic
 
-    private
-   
-    def post_params
-        params.require(:post).permit(:topic_id, :name, :body)
-    end
+		if @post.save
+			redirect_to topic_url(@topic)
+		else
+			render "topics/show"
+		end
+	end
+
+	def destroy
+		@topic = Topic.find(params[:topic_id])
+		@post = Post.find(params[:id])
+		@post.destroy
+		redirect_to topic_url(@topic)
+	end
+
+	private
+
+	def params_post
+		params.require(:post).permit(:name, :body)
+	end
 end

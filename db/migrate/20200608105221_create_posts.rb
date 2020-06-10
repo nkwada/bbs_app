@@ -3,9 +3,9 @@ class CreatePosts < ActiveRecord::Migration[5.2]
     create_table :posts do |t|
       t.string :name
       t.text :body
-      t.references :topic, foreign_key: true
 
       t.timestamps
+	  t.index :topic_id
     end
   end
 end

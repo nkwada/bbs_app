@@ -1,0 +1,24 @@
+<%= link_to "スレッド一覧に戻る", topics_path %>
+<hr>
+<h1>topics#new</h1>
+<% if @topic.errors.any? %>
+	<%= @topic.errors.full_messages %>
+<% end %>
+
+<%= form_for @topic do |f| %>
+	タイトル: <%= f.text_field :title %> <br>
+	作成者名: <%= f.text_field :name %> <br>
+
+  <p>
+    <%= f.label :category, 'カテゴリ' %>
+    <%= f.collection_check_boxes(:category_ids, Category.all, :id, :name) do |category| %> 
+      <%= category.label do %>
+        <%= category.check_box %>
+        <%= category.text %>
+      <% end %>
+    <% end %>
+  </p>
+
+	<%= f.submit %>
+<% end %>
+

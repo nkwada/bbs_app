@@ -2,30 +2,50 @@ class TopicsController < ApplicationController
 
 	def index
 		@topics = Topic.all
-		@newTopic = Topic.new
-	end
-
-	def create
-	  	@topic = Topic.new(topic_params)
-	  	@topic.save
-	  	redirect_to root_path
 	end
 
 	def show
-	 	@topic = Topic.find(params[:id])
-	 	@newpost = Post.new(:topic_id => params[:id])
-	 	@posts = Post.where(topic_id: params[:id])
+     	@topic = Topic.includes(:posts).find(params[:id])
+		@post = Post.new
 	end
 
-	def delete
-	  	@topic = Topic.find(params[:id])
-	  	@topic.destroy
-	  	redirect_to root_path
+	def new
+		@topic = Topic.new
 	end
 
-    private
-   
-    def topic_params
-        params.require(:topic).permit(:title)
-    end
+	def create
+		@topic = Topic.new(params_topic)
+		if @topic.save
+			redirect_to topic_url(@topic)
+		else
+			render "new"
+		end
+	end
+
+	def edit
+		@topic = Topic.find(params[:id])
+	end
+
+	def update
+		@topic = Topic.find(params[:id])
+		if @topic.update_attributes(params_topic)      
+			redirect_to topic_url(@topic)
+		else
+			render "edit"
+		end
+	end
+
+	def destroy
+		@topic = Topic.find(params[:id])
+		@topic.destroy
+		redirect_to topics_url
+	end
+ 
+
+	private
+
+	def params_topic
+		params.require(:topic).permit(:title, :name, category_ids: [])
+	end
+ 
 end
