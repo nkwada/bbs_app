@@ -1,4 +1,5 @@
 <%= link_to "スレッド一覧に戻る", topics_path %>
+
 <hr>
 
 <% if @topic.errors.any? %>
@@ -9,25 +10,27 @@
 	<%= f.label :title, "タイトル：" %>
 	<%= f.text_field :title %> <br>
 
-	  <%= f.fields_for :posts do |i| %>
-	    <div class="form-group">
-	      <%= i.label :name, "名前：" %>
-	      <%= i.text_field :name %>
-	      <br>
-	      <%= i.label :body, "本文：" %>
-	      <%= i.text_area :body %>
-	    </div>
-	  <% end %>
+	<%= f.fields_for :posts do |i| %>
+		<div class="form-group">
+			<%= i.label :name, "名前：" %>
+			<%= i.text_field :name %>
+			<br>
+			<%= i.label :body, "本文：" %>
+			<%= i.text_area :body %>
+		</div>
+	<% end %>
 
-    <%= f.label :category, "カテゴリ：" %>
-    <%= f.collection_check_boxes(:category_ids, Category.all, :id, :name) do |category| %>
-      <%= category.label do %>
-        <%= category.check_box %>
-        <%= category.text %>
-      <% end %>
-    <% end %>
-<hr>
+	<%= f.label :category, "カテゴリ：" %>
+	<%= f.collection_check_boxes(:category_ids, Category.all, :id, :name) do |category| %>
+		<%= category.label do %>
+			<%= category.check_box %>
+			<%= category.text %>
+		<% end %>
+	<% end %>
+
+	<hr>
 
 	<%= f.submit "スレッド作成" %>
+
 <% end %>
 
